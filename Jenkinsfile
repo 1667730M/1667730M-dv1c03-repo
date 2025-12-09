@@ -59,16 +59,18 @@ pipeline {
 
         stage('1667730m-S5') {
             steps {
-                script {
-                    // Prompt user to continue or abort
-                    input(
-                        message: "1667730m, after checking security reports, continue the pipeline?",
-                        ok: "Proceed"
-                    )
+                timeout(time: 1, unit: 'HOURS') {
+                    script {
+                        // Prompt user to continue or abort
+                        input(
+                            message: "1667730m, after checking security reports, continue the pipeline?",
+                            ok: "Proceed"
+                        )
 
-                    echo "1667730m-S5: Approve to continue the pipeline."
-                    // Set environment variable to indicate approval
-                }
+                        echo "1667730m-S5: Approve to continue the pipeline."
+                        // Set environment variable to indicate approval
+                    }
+                }    
             }
         }
 
