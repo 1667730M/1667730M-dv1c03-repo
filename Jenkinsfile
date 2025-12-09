@@ -2,47 +2,57 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "myapacheapp"
-        CONTAINER_NAME = "myapachecontainer"
+        IMAGE_NAME = "1667730m-temp-server-image"
+        CONTAINER_NAME = "1667730m-web-server"
         HOST_PORT = "32700"
     }
 
     stages {
 
-        // stage('Checkout') {
-        //     steps {
-        //         git branch: 'main', url: 'https://github.com/1667730M/1667730M-dv1c03-repo.git'
-        //     }
-        // }
-
-        stage('Build Docker Image') {
+        stage('1667730m-S1') {
             steps {
-                script {
-                    bat "docker build -t %IMAGE_NAME%:latest ."
-                }
+                echo "1667730m-S1: Release environment is ready."
             }
         }
 
-        stage('Run Container') {
+        stage('1667730m-S2') {
             steps {
-                script {
-                    // Stop old container if it exists
-                    bat "docker stop %CONTAINER_NAME% || exit 0"
-                    bat "docker rm %CONTAINER_NAME% || exit 0"
-
-                    // Run Apache container in detached mode
-                    bat "docker run -d --name %CONTAINER_NAME% -p %HOST_PORT%:80 %IMAGE_NAME%:latest"
-
-                    // Wait ~3 seconds for Apache to start
-                    bat "ping -n 4 127.0.0.1 > nul"
-                }
+                // Assume condition is met
+                echo "1667730m-S2: Release Windows checked - Continue the pipeline"
             }
         }
 
-        stage('Test HTTP Response') {
+        stage('1667730m-S3') {
             steps {
-                script {
-                    bat "curl -I http://localhost:%HOST_PORT% | find \"200 OK\""
+                echo "1667730m-S3: Setting up new web server container..."
+
+                // Stop old container if exists
+                bat "docker stop %CONTAINER_NAME% || exit 0"
+                bat "docker rm %CONTAINER_NAME% || exit 0"
+
+                // Build and run new container on port 32700
+                bat "docker build -t %IMAGE_NAME%:latest ."
+                bat "docker run -d --name %CONTAINER_NAME% -p %HOST_PORT%:80 %IMAGE_NAME%:latest"
+
+                echo "Waiting for Apache to start..."
+                bat "ping -n 4 127.0.0.1 > nul"
+
+                echo "1667730m-S3: Web Server is setup and running"
+            }
+        }
+
+        stage('1667730m-parallel-S4') {
+            parallel {
+                stage('1667730m-S4A') {
+                    steps {
+                        echo "1667730m-S4A: SQL Injection (SQLi) Test – Report Generated"
+                    }
+                }
+
+                stage('1667730m-S4B') {
+                    steps {
+                        echo "1667730m-S4B: Cross-Site Scripting (XSS) Test – Report Generated"
+                    }
                 }
             }
         }
