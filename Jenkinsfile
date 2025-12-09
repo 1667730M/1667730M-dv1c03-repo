@@ -45,13 +45,13 @@ pipeline {
             parallel {
                 stage('1667730m-S4A') {
                     steps {
-                        echo "1667730m-S4A: SQL Injection (SQLi) Test – Report Generated"
+                        echo "1667730m-S4A: SQL Injection (SQLi) Test - Report Generated"
                     }
                 }
 
                 stage('1667730m-S4B') {
                     steps {
-                        echo "1667730m-S4B: Cross-Site Scripting (XSS) Test – Report Generated"
+                        echo "1667730m-S4B: Cross-Site Scripting (XSS) Test - Report Generated"
                     }
                 }
             }
