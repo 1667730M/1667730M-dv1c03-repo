@@ -42,7 +42,6 @@ pipeline {
         }
 
         stage('1667730m-parallel-S4') {
-            agent none
             parallel {
                 stage('1667730m-S4A') {
                     agent any
