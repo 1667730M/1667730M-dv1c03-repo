@@ -58,7 +58,6 @@ pipeline {
         }
 
         stage('1667730m-S5') {
-            agent none
             steps {
                 script {
                     // Prompt user to continue or abort
