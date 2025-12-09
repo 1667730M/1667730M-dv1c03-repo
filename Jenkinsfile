@@ -61,16 +61,19 @@ pipeline {
             steps {
                 script {
                     // Prompt user to continue or abort
-                    def userChoice = input(
-                        message: "1667730m, after checking security reports, continue the pipeline?",
-                        ok: "Proceed",
-                        parameters: []
-                    )
+                    try {
+                        input(
+                            message: "1667730m, after checking security reports, continue the pipeline?",
+                            ok: "Proceed",
+                            parameters: []
+                        )
 
-                    echo "1667730m-S5: Approve to continue the pipeline."
-                    // Set environment variable to indicate approval
-                    env.PROCEED_STAGE6 = "true"
-                }
+                        echo "1667730m-S5: Approve to continue the pipeline."
+                        // Set environment variable to indicate approval
+                        env.PROCEED_STAGE6 = "true"
+                    } catch (err) {
+                        env.PROCEED_STAGE6 = "false"
+                    }
             }
         }
 
