@@ -9,11 +9,11 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/1667730M/1667730M-dv1c03-repo.git'
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         git branch: 'main', url: 'https://github.com/1667730M/1667730M-dv1c03-repo.git'
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {
