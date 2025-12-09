@@ -74,6 +74,7 @@ pipeline {
                     } catch (err) {
                         env.PROCEED_STAGE6 = "false"
                     }
+                }
             }
         }
 
