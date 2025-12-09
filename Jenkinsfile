@@ -63,7 +63,7 @@ pipeline {
                     // Prompt user to continue or abort
                     input(
                         message: "1667730m, after checking security reports, continue the pipeline?",
-                        
+                        ok: "Proceed"
                     )
 
                     echo "1667730m-S5: Approve to continue the pipeline."
