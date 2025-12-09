@@ -56,5 +56,33 @@ pipeline {
                 }
             }
         }
+
+        stage('1667730m-S5') {
+            steps {
+                script {
+                    // Prompt user to continue or abort
+                    def userChoice = input(
+                        message: "1667730m, after checking security reports, continue the pipeline?",
+                        ok: "Proceed",
+                        parameters: []
+                    )
+
+                    echo "1667730m-S5: Approve to continue the pipeline."
+                    // Set environment variable to indicate approval
+                    env.PROCEED_STAGE6 = "true"
+                }
+            }
+        }
+
+        stage('1667730m-S6') {
+            when {
+                expression {
+                    return env.PROCEED_STAGE6 == "true"
+                }
+            }
+            steps {
+                echo "1667730m-S6: Getting ready for next phase"
+            }
+        }
     }
 }
