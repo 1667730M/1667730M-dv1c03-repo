@@ -1,15 +1,113 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Python Web App</title>
+    <meta charset="UTF-8">
+    <title>Energy Management Dashboard</title>
+
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f0f0f0; text-align: center; padding-top: 50px; }
-        h1 { color: #333; }
-        p { color: #555; }
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            margin: 0;
+        }
+        header {
+            background: #003366;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        #twin-box {
+            height: 200px;
+            background: linear-gradient(135deg, #4aa3ff, #003d66);
+            border-radius: 12px;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
+
 </head>
 <body>
-    <h1>Hello from Python running on Apache2!</h1>
-    <p>This is a static HTML page served by Apache.</p>
+
+<header>
+    <h1>Energy Management Dashboard</h1>
+</header>
+
+<div class="container">
+
+    <!-- Digital Twin -->
+    <div class="card">
+        <h2>Digital Twin Status</h2>
+        <div id="twin-box">Loading...</div>
+    </div>
+
+    <!-- Energy Usage -->
+    <div class="card">
+        <h2>Current Energy Usage</h2>
+        <h1 id="energy-value">--</h1>
+    </div>
+
+    <!-- Live Chart -->
+    <div class="card" style="grid-column: span 2;">
+        <h2>Power History (kW)</h2>
+        <canvas id="powerChart"></canvas>
+    </div>
+
+</div>
+
+<!-- ===== EMBEDDED STATIC DATA ===== -->
+<script>
+const dashboardData = {
+    machine_status: "Running",
+    energy_usage_kw: 42,
+    power_history: [30, 32, 35, 40, 43, 42, 41, 39, 38, 37]
+};
+</script>
+<!-- ================================= -->
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// Load static embedded data
+document.getElementById("twin-box").innerHTML = dashboardData.machine_status;
+document.getElementById("energy-value").innerHTML = dashboardData.energy_usage_kw + " kW";
+
+// Build chart
+const ctx = document.getElementById("powerChart");
+new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: dashboardData.power_history.map((_, i) => "T" + (i + 1)),
+        datasets: [{
+            label: "Power (kW)",
+            data: dashboardData.power_history,
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+</script>
+
 </body>
 </html>
