@@ -59,7 +59,7 @@ pipeline {
 
         stage('1667730m-S5') {
             steps {
-                timeout(time: 1, unit: 'HOURS') {
+                timeout(time: 2, unit: 'MINUTES') {
                     script {
                         // Prompt user to continue or abort
                         input(
@@ -68,7 +68,6 @@ pipeline {
                         )
 
                         echo "1667730m-S5: Approve to continue the pipeline."
-                        // Set environment variable to indicate approval
                     }
                 }    
             }
