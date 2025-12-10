@@ -30,9 +30,8 @@ pipeline {
                 bat "docker stop %CONTAINER_NAME% || exit 0"
                 bat "docker rm %CONTAINER_NAME% || exit 0"
 
-                // Build and run new container on port 32700
-                bat "docker build -t %IMAGE_NAME%:latest ."
-                bat "docker run -d --name %CONTAINER_NAME% -p %HOST_PORT%:80 %IMAGE_NAME%:latest"
+                // Run new container, given the IMAGE_NAME on port 32700
+                bat "docker run -d --name %CONTAINER_NAME% -p %HOST_PORT%:80 %IMAGE_NAME%"
 
                 echo "Waiting for Apache to start..."
                 bat "ping -n 4 127.0.0.1 > nul"
